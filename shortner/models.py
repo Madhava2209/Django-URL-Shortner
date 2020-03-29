@@ -7,6 +7,6 @@ class url(models.Model):
     title=models.CharField(max_length=100)
     short_hash=models.CharField(max_length=100,null=True,blank=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
-    no_clicks=models.IntegerField(null=True,blank=True)
+    no_clicks=models.IntegerField(default=0)
     def __str__(self):
         return self(title) 
