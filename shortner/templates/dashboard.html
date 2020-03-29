@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="row">
+<div class="col-8">
+    <div class="card" >
+        <div class="card-body">
+          {% for url in link %}
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{url.title}}</h5>
+              <label >{{url.no_click}}</label>
+              <label>{{url.short_hash}}</label>
+              <p class="card-text">{{url.long_url}}</p>
+              <a href="{{url.long_url}}" class="card-link">Visit link</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+</div>
+<div class="col-4">
+    <form action="/create_short_url/" method="POST" class="form-group">
+        {% csrf_token %}
+        <p>title</p>
+        <input type="text" name="title" >
+        <p>long_url</p>
+        <input type="text" name="long_url">
+        <br><br>
+        <button type="submit" class="btn btn-success">Shorten</button>
+    
+    </form>
+</div>
+</div>
+{% endblock %}
