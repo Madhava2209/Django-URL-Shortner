@@ -3,15 +3,16 @@
 {% block body %}
 <div class="row">
 <div class="col-8">
-    <div class="card" >
+  <h1 style="padding-left: 30px;">Your Links:</h1>
+    <div class="card" style="background-color: rgb(231, 49, 49);">
         <div class="card-body">
           {% for url in link %}
-          <div class="card" >
+          <div class="card" style="margin-bottom: 10px;" >
             <div class="card-body">
               <h5 class="card-title">{{url.title}}</h5>
-              <label >{{url.no_click}}</label>
-              <label>{{url.short_hash}}</label>
-              <p class="card-text">{{url.long_url}}</p>
+              <p>No_Clicks: {{url.no_clicks}} <br>
+                 Shortened-url: {{url.short_hash}}</p>
+              <p class="card-text">Long-url: {{url.long_url}}</p>
               <a href="{{url.long_url}}" class="card-link">Visit link</a>
             </div>
           </div>
@@ -20,16 +21,19 @@
       </div>
 </div>
 <div class="col-4">
+  <h1>Shrten Your Links:</h1>
+  <div class="card" style="padding: 10px 20px 10px 20px;">
     <form action="/create_short_url/" method="POST" class="form-group">
         {% csrf_token %}
-        <p>title</p>
-        <input type="text" name="title" >
-        <p>long_url</p>
-        <input type="text" name="long_url">
-        <br><br>
+        <h1>title</h1>
+        <input type="text" name="title" class="form-control" style="width: 400px;color: red;" >
+        <h1> long_url</h1>
+        <input type="text" name="long_url" class="form-control" style="width:400px;color: blue;">
+        <br>
         <button type="submit" class="btn btn-success">Shorten</button>
     
     </form>
+  </div>
 </div>
 </div>
 {% endblock %}

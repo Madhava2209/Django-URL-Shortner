@@ -3,6 +3,7 @@ from django.contrib.auth import *
 from shortner.models import *
 import hashlib
 from hashlib import blake2b
+ 
 # Create your views here.
 def home(request):
     return render(request,"home.html")
@@ -34,12 +35,10 @@ def create_short_url(request):
 
 def redirect_to_long_url(request,hashcode):
     url_instance=url.objects.get(short_hash=hashcode)
-    no_clicks=url_instance.no_clicks
-    no_clicks=no_clicks+1
-    url_instance.objects.update(no_clicks=no_clicks)
+    url_instance.no_clicks +=1  
     url_instance.save()
     long_url=url_instance.long_url
-    return redirect(f"/{long_url}/")
+    return redirect(f"{long_url}/")
 
 
 

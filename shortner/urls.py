@@ -6,6 +6,6 @@ urlpatterns = [
     path("home/",home),
     path("dashboard/",dashboard),
     path("create_short_url/",create_short_url),
-    path("<str:hashcode>/",redirect_to_long_url)
+    path("<str:hashcode>/",redirect_to_long_url),
     
 ]
