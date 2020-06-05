@@ -17,11 +17,17 @@ def dashboard(request):
 
 def create_short_url(request):
     if request.method=="POST":
+        user=request.user
+        url_instance=url.objects.filter(user=user)
         title=request.POST["title"]
         long_url=request.POST["long_url"]
-        m = hashlib.sha256(str(long_url).encode('utf-8'))
-        m.digest()
-
+        #m = hashlib.sha256(str(long_url).encode('utf-8'))
+        #m.digest()
+        url_name=url.objects.filter(title=title)
+        if url_name:
+            return render(request,'dashboard.html',{"link":url_instance,"error":"not available"})
+        m="my-url.herokuapp.com/" + title
+        print(m)
         log=url.objects.create(
             title=title,
             long_url=long_url,

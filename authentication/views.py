@@ -8,11 +8,14 @@ def signup(request):
     if request.method=="POST":
         username =request.POST["user_name"]
         email =request.POST["email"]
+        if User.objects.filter(username=username):
+            return render(request,"signup.html",{"error":"Username not available"})
+        if User.objects.filter(email=email):
+            return render(request,"signup.html",{"email":"Email is already registered"})
         password =request.POST["password"]
-        firstname=request.POST["firstname"]
-        lastname=request.POST["lastname"]
+        
 
-        user=User.objects.create_user(username=username,email=email,password=password,first_name=firstname,last_name=lastname)
+        user=User.objects.create_user(username=username,email=email,password=password)
 
         login(request,user)
 
@@ -30,7 +33,7 @@ def signin(request):
             login(request,user)
             return redirect("/dashboard/")
         else:
-            return redirect('/login/')
+            return render(request,'login.html',{"error":"Provide valid credentials"})
     return render(request,"login.html")
 
 def signout(request):

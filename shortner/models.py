@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class url(models.Model):
     long_url=models.CharField(max_length=200,null=True,blank=True)
     title=models.CharField(max_length=100)
-    short_hash=models.CharField(max_length=100,null=True,blank=True)
+    short_hash=models.CharField(max_length=200,null=True,blank=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     no_clicks=models.IntegerField(default=0)
     def __str__(self):

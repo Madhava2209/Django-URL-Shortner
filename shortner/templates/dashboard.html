@@ -1,39 +1,60 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="row">
-<div class="col-8">
-  <h1 style="padding-left: 30px;">Your Links:</h1>
-    <div class="card" style="background-color: rgb(231, 49, 49);">
-        <div class="card-body">
+<style>
+  #link:hover{
+    transform: scaleX(1.1);
+    transform: scaleY(1.1);
+    outline: 2px solid orangered;
+    position: relative;
+  }
+</style>
+<div >
+  <div style="display: flex;align-items: center;justify-content: center;flex-direction: column;">
+    <h3>Shorten Your Links:</h3>
+    <div class="card" style="align-items: left; padding: 10px; width: 25rem; margin-bottom: 5%;">
+      <form action="/create_short_url/" method="POST" class="form-group">
+          {% csrf_token %}
+          <h4>title</h4>
+          <input type="text" name="title" class="form-control" style="color: red;" required>
+          <p style="color: red;">{{error}}</p>
+          <h4> long_url</h4>
+          <input type="text" name="long_url" class="form-control" style="color: blue;" required>
+          <br>
+          <button type="submit" class="btn btn-success">Shorten</button>
+      
+      </form>
+    </div>
+  </div>
+  
+<div  style="display: flex; flex-direction: column;padding: 10px;">
+  
+    {% if link %}
+    <h4 style="margin-bottom: 10px;">Your Links:</h4>
           {% for url in link %}
-          <div class="card" style="margin-bottom: 10px;" >
+          <div class="card" style="margin-bottom: 1%;background-color: black;" id="link" >
             <div class="card-body">
               <h5 class="card-title">{{url.title}}</h5>
               <p>No_Clicks: {{url.no_clicks}} <br>
-                 Shortened-url: {{url.short_hash}}</p>
+                 Shortened-url: <i style="color: red;">{{url.short_hash}}</i>
+                 </p>
               <p class="card-text">Long-url: {{url.long_url}}</p>
               <a href="{{url.long_url}}" class="card-link">Visit link</a>
             </div>
           </div>
           {% endfor %}
-        </div>
-      </div>
-</div>
-<div class="col-4">
-  <h1>Shrten Your Links:</h1>
-  <div class="card" style="padding: 10px 20px 10px 20px;">
-    <form action="/create_short_url/" method="POST" class="form-group">
-        {% csrf_token %}
-        <h1>title</h1>
-        <input type="text" name="title" class="form-control" style="width: 400px;color: red;" >
-        <h1> long_url</h1>
-        <input type="text" name="long_url" class="form-control" style="width:400px;color: blue;">
-        <br>
-        <button type="submit" class="btn btn-success">Shorten</button>
-    
-    </form>
-  </div>
+        
+        {% endif %}
 </div>
 </div>
+<script>
+  function myFunction() {
+    var copyText = document.getElementById("myInput");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999)
+    document.execCommand("copy");
+    alert("Copied the text: " + copyText.value);
+  }
+  </script>
+  
 {% endblock %}
